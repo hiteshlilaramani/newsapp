@@ -9,7 +9,6 @@ const News = (props) => {
     const [loading, setLoading] = useState(true)
     const [page, setPage] = useState(1)
     const [totalResults, setTotalResults] = useState(0)
-    // document.title = `${capitalizeFirstLetter(props.category)} - Zebra News`
 
     const capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -31,22 +30,24 @@ const News = (props) => {
     }
 
     useEffect(() => {
+        document.title = `${capitalizeFirstLetter(props.category)} - Zebra News`
         updateNews();
+         // eslint-disable-next-line
     }, [])
 
-    const handlePrevClick = async () => {
-        setPage(page-1)
-        updateNews();
-    }
+    // const handlePrevClick = async () => {
+    //     setPage(page-1)
+    //     updateNews();
+    // }
 
-    const handleNextClick = async () => {
-        setPage(page+1)
-        updateNews();
-    }
+    // const handleNextClick = async () => {
+    //     setPage(page+1)
+    //     updateNews();
+    // }
 
     const fetchMoreData = async () => {
+        const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=b1c24c6b0deb496f820ddbbce1c3ccf3&page=${page+1}&pageSize=${props.pageSize}`
         setPage(page+1)
-        const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=b1c24c6b0deb496f820ddbbce1c3ccf3&page=${page}&pageSize=${props.pageSize}`
         let data = await fetch(url);
         let parsedData = await data.json();
         setArticles(articles.concat(parsedData.articles))
@@ -56,7 +57,7 @@ const News = (props) => {
     console.log("render")
     return (
         <>
-            <h2 className="text-center" style={{ margin: '20px 0px' }}><strong>Top {capitalizeFirstLetter(props.category)} Headlines</strong></h2>
+            <h2 className="text-center" style={{ margin: '70px 0px 10px 0px' }}><strong>Top {capitalizeFirstLetter(props.category)} Headlines</strong></h2>
 
             {loading && <Spinner />}
 
